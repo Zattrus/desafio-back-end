@@ -17,6 +17,7 @@ const subscriptions = database.sequelize.define('subscriptions', {
 })
 
 module.exports = subscriptions
+subscriptions.sync()
 //Criando tabela
 // subscriptions.sync({ force: true })
 
