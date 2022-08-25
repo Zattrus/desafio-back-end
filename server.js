@@ -2,42 +2,37 @@ const express = require('express')
 const app = express();
 const bodyParser = require('body-parser')
 const { body, validationResult } = require('express-validator')
-
+const subscriptions = require('./models/subscriptions')
 app.set('view engine', 'ejs');
-
-
-// Conexao com BD MySql
-const mysql = require('mysql')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/index', (req, res) => {
-    res.render('index')
-})
+const erros = [];
+const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+const email = body.email
 
-app.post('/add-email', (req, res) => {
-    res.send('Email: ' + req.body.email);
-})
+if (email == '' || typeof email == undefined || email == null) {
+    erros.push({ mensagem: "Campo email n pode ser vazio" })
+}
+if (emailRegex.test(email)) {
+    erros.push({ mensagem: "Email invalido" })
+}
+if (erros.length > 0)
 
-app.post('/validador-email', [
-    body('email').isEmail().withMessage('O email precisa ser valido'),
-    body('email').custom(value => {
-        if (!value) {
-            return Promise.reject("Email é obrigatorio")
-        }
-        if (value == "teste@teste.com") {
-            return Promise.reject("Email já cadastrado")
-        }
-        return true;
+    app.get('/index', (req, res) => {
+        res.render('index')
     })
-], (req, res) => {
-    const erro = validationResult(req);
-    if (!erro.isEmpty()) {
-        return res.status(400).json({ erro: erro.array() })
-    }
 
-    res.json({ msg: "Sucesso" })
+app.post('/subscriptions', (req, res) => {
+    subscriptions.create({
+        email: req.body.email,
+        name: req.body.name,
+    }).then(() => {
+        if (email === req.body.email) { }
+        res.send("Inscrição realizada com sucesso!")
+    }).catch(err => {
+        res.send("Erro ao cadastrar" + err)
+    })
 })
-
 app.listen(8080)
