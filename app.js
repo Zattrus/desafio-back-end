@@ -100,4 +100,6 @@ app.put('/subscriptions/:id', (req, res) => {
 })
 
 
-app.listen(8080)
+app.listen(8080, () => {
+    console.log("Servidor rodando na porta 8080");
+})
