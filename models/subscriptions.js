@@ -7,12 +7,22 @@ const subscriptions = database.sequelize.define('subscriptions', {
         allowNull: false,
         primaryKey: true
     },
-    email: {
-        type: database.Sequelize.STRING,
+    subscription_date: {
+        type: database.Sequelize.DATE,
         allowNull: false
     },
     name: {
-        type: database.Sequelize.STRING
+        type: database.Sequelize.TEXT
+    },
+    email: {
+        type: database.Sequelize.TEXT,
+        uniqueKey: true
+    },
+    last_message: {
+        type: database.Sequelize.INTEGER,
+    },
+    active: {
+        type: database.Sequelize.BOOLEAN
     }
 })
 
@@ -20,13 +30,3 @@ module.exports = subscriptions
 subscriptions.sync()
 //Criando tabela
 // subscriptions.sync({ force: true })
-
-// subscription_date: {
-//     type: database.Sequelize.DATE
-// },
-// last_menssage: {
-//     type: database.Sequelize.INTEGER
-// },
-// active: {
-//     type: database.Sequelize.BOOLEAN
-// }

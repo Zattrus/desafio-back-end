@@ -1,0 +1,6 @@
+localhost:8080/subscriptions
+
+{
+    "name": "Gabriel",
+    "email": "teste@teste.com"
+}
