@@ -1,6 +1,9 @@
 # desafio-back-end
 Desafio back-end precato
-
+## Tecnologias usadas:
+#### mySQL Workbench para o banco de dados.
+#### Insomnia para tráfico de totas, GET, PUSH e POST.
+ 
 
 ## Acessando o projeto 🗂️
 
